@@ -9,7 +9,7 @@ const movies = new dataStore({
 router.get("/", (req, res) => {
   movies.find({}, (err, data) => {
     if (err) {
-      return res.status(500).json({ msg: "something went wrong" });
+      return res.status(500).json({ msg: err });
     }
     res.json(data);
   });
@@ -19,12 +19,30 @@ router.post("/", (req, res) => {
   try {
     movies.insert(req.body, (err, data) => {
       if (err) {
-        return res.status(500).json({ msg: "something went wrong" });
+        return res.status(500).json({ msg: err });
       }
-      res.json({ msg: "movie added successfully" });
+      res.json({ msg: "movie added successfully", id: data._id });
     });
   } catch (err) {
-    console.log(err);
+    return res.status(500).json({ msg: err });
+  }
+});
+
+router.patch("/:id", (req, res) => {
+  try {
+    movies.update(
+      { _id: req.params.id },
+      { $set: req.body },
+      { upsert: false },
+      (err, data) => {
+        if (err) {
+          return res.status(500).json({ msg: err });
+        }
+        res.json({ msg: "movie updated successfully" });
+      }
+    );
+  } catch (err) {
+    return res.status(500).json({ msg: err });
   }
 });
 
