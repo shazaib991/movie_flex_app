@@ -46,4 +46,17 @@ router.patch("/:id", (req, res) => {
   }
 });
 
+router.delete("/:id", (req, res) => {
+  try {
+    movies.remove({ _id: req.params.id }, (err, data) => {
+      if (err) {
+        return res.status(500).json({ msg: err });
+      }
+      res.json({ msg: "movie deleted successfully" });
+    });
+  } catch (err) {
+    return res.status(500).json({ msg: err });
+  }
+});
+
 module.exports = router;
