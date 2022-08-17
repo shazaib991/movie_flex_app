@@ -10,7 +10,14 @@ function MovieSection() {
           <div className="movie-form">
             <input type="text" placeholder="enter name of movie" />
             <select name="movie-rating" id="movie-rating">
-              <option value="1"></option>
+              <option value="rate this movie" disabled>
+                rate this movie
+              </option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
             </select>
             <input type="text" placeholder="enter your name" />
             <div className="movie-form-btn">
