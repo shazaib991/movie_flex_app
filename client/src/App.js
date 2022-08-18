@@ -1,3 +1,4 @@
+import Footer from "./components/footer/Footer";
 import MovieSection from "./components/movieSection/MovieSection";
 import Navbar from "./components/navbar/Navbar";
 
@@ -6,6 +7,7 @@ function App() {
     <div>
       <Navbar />
       <MovieSection />
+      <Footer />
     </div>
   );
 }

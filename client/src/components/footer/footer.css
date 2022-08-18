@@ -1,0 +1,26 @@
+.footer-container{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    background-color: #8da7ff;
+    height: 3rem;
+    align-items: center;
+    margin-top: 6rem;
+}
+
+.footer{
+    width: 85%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.footer-logo{
+    color: white;
+    font-size: 2rem;
+}
+
+.footer p{
+    color: white;
+    font-size: 1.7rem;
+}

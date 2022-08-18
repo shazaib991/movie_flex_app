@@ -1,9 +1,12 @@
 /* navbar */
 .navbar-container{
     height: 7rem;
+    width: 100%;
     background-color: #5973ff;
     display: flex;
     justify-content: center;
+    position: fixed;
+    top: 0;
 }
 
 .navbar{
