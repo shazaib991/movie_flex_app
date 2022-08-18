@@ -76,4 +76,27 @@
     width: 95%;
     display: flex;
     justify-content: space-between;
+    margin-top: 3.5rem;
+}
+
+.movie-list-search-sort input{
+    outline: none;
+    border: none;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    background-color: #8da7ff;
+    color: white;
+}
+
+.movie-list-search-sort input::placeholder{
+    color: white;
+}
+
+.movie-list-search-sort select{
+    outline: none;
+    border: none;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    background-color: #8da7ff;
+    color: white;
 }
