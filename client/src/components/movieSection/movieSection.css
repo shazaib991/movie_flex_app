@@ -145,3 +145,43 @@
 }
 
 /* movie pagination and download pdf */
+.movie-pagination{
+    width: 95%;
+    display: flex;
+    justify-content: space-between;
+    margin: 1.5rem 0;
+    align-items: center;
+}
+
+.movie-pagination-navigators-container{
+    display: flex;
+}
+
+.movie-pagination-navigators{
+    width: 3.5rem;
+    height: 3.5rem;
+    background-color: #efefef;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 1rem;
+    border-radius: 0.5rem;
+    font-size: 1.7rem;
+    cursor: pointer;
+}
+
+.movie-pagination-navigators.active{
+    background-color: #8da7ff;
+    color: white;
+}
+
+.movie-pagination button{
+    width: 25rem;
+    background-color: #8da7ff;
+    border: none;
+    border-radius: 0.5rem;
+    color: white;
+    font-size: 1.7rem;
+    cursor: pointer;
+    padding: 1rem 0;
+}

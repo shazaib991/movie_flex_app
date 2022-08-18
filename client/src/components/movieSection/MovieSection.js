@@ -70,7 +70,7 @@ function MovieSection() {
           </div>
           <div className="movie-pagination">
             <div className="movie-pagination-navigators-container">
-              <div className="movie-pagination-navigators">1</div>
+              <div className="movie-pagination-navigators active">1</div>
               <div className="movie-pagination-navigators">2</div>
               <div className="movie-pagination-navigators">3</div>
               <div className="movie-pagination-navigators">4</div>
