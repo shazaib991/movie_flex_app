@@ -1,3 +1,4 @@
+/* movie */
 .movie-container{
     display: flex;
     justify-content: center;
@@ -23,6 +24,7 @@
     border-radius: 0.8rem;
 }
 
+/* movie form */
 .movie-form{
     width: 95%;
     display: flex;
@@ -61,4 +63,17 @@
     color: white;
     font-size: 1.7rem;
     cursor: pointer;
+}
+
+/* movie list */
+.movie-list{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.movie-list-search-sort{
+    width: 95%;
+    display: flex;
+    justify-content: space-between;
 }

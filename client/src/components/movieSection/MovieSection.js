@@ -25,6 +25,16 @@ function MovieSection() {
             </div>
           </div>
         </div>
+        <div className="movie-list">
+          <div className="movie-list-search-sort">
+            <input type="text" placeholder="search" />
+            <select name="sort" id="sort">
+              <option value="userName">user name</option>
+              <option value="movieName">movie name</option>
+              <option value="movieRating">movie rating</option>
+            </select>
+          </div>
+        </div>
       </div>
     </div>
   );
