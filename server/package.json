@@ -4,12 +4,13 @@
   "description": "nedb server for react app",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "nodemon app.js"
   },
   "author": "shazaib munawar",
   "license": "ISC",
   "dependencies": {
     "express": "^4.18.1",
-    "nedb": "^1.8.0"
+    "nedb": "^1.8.0",
+    "nodemon": "^2.0.19"
   }
 }
