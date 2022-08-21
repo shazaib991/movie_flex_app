@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./movieSection.css";
 import editIcon from "../../icons/icons8-edit-384.png";
 import deleteIcon from "../../icons/icons8-delete-144.png";
@@ -10,6 +10,7 @@ function MovieSection() {
   const [movieRating, setMovieRating] = useState("");
   const [requestMessage, setRequestMessage] = useState({});
   const [showRequestMessage, setShowRequestMessage] = useState(false);
+  const [movieData, setMovieData] = useState([]);
 
   const handleMovieNameChange = (e) => {
     setMovieName(e.target.value);
@@ -59,6 +60,17 @@ function MovieSection() {
       console.log(error);
     }
   };
+
+  const fetchMovieData = async () => {
+    const response = await axios.get("http://localhost:5000/api/v1/movies");
+    const movies = response.data;
+
+    setMovieData(movies);
+  };
+
+  useEffect(() => {
+    fetchMovieData();
+  }, []);
 
   return (
     <div className="movie-container">
@@ -125,24 +137,19 @@ function MovieSection() {
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>movie 1</td>
-                  <td>4</td>
-                  <td>user 1</td>
-                  <td>
-                    <img src={editIcon} alt="edit" />
-                    <img src={deleteIcon} alt="edit" />
-                  </td>
-                </tr>
-                <tr>
-                  <td>movie 2</td>
-                  <td>5</td>
-                  <td>user 2</td>
-                  <td>
-                    <img src={editIcon} alt="edit" />
-                    <img src={deleteIcon} alt="edit" />
-                  </td>
-                </tr>
+                {movieData.map((items) => {
+                  return (
+                    <tr key={items._id}>
+                      <td>{items.movieName}</td>
+                      <td>{items.movieRating}</td>
+                      <td>{items.userName}</td>
+                      <td>
+                        <img src={editIcon} alt="edit" />
+                        <img src={deleteIcon} alt="edit" />
+                      </td>
+                    </tr>
+                  );
+                })}
               </tbody>
             </table>
           </div>
