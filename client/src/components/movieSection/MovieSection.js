@@ -46,6 +46,9 @@ function MovieSection() {
         };
         setRequestMessage(requestMessage);
         setShowRequestMessage(true);
+        setMovieName("");
+        setMovieRating("");
+        setUserName("");
         return setTimeout(() => {
           setShowRequestMessage(false);
         }, 2000);
@@ -70,7 +73,7 @@ function MovieSection() {
 
   useEffect(() => {
     fetchMovieData();
-  }, []);
+  }, [movieData]);
 
   return (
     <div className="movie-container">
@@ -117,53 +120,57 @@ function MovieSection() {
             </div>
           </div>
         </div>
-        <div className="movie-list">
-          <div className="movie-list-search-sort">
-            <input type="text" placeholder="search" />
-            <select name="sort" id="sort">
-              <option value="userName">user name</option>
-              <option value="movieName">movie name</option>
-              <option value="movieRating">movie rating</option>
-            </select>
-          </div>
-          <div className="movie-list-table">
-            <table>
-              <thead>
-                <tr>
-                  <th>movie name</th>
-                  <th>movie rating</th>
-                  <th>user name</th>
-                  <th>actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {movieData.map((items) => {
-                  return (
-                    <tr key={items._id}>
-                      <td>{items.movieName}</td>
-                      <td>{items.movieRating}</td>
-                      <td>{items.userName}</td>
-                      <td>
-                        <img src={editIcon} alt="edit" />
-                        <img src={deleteIcon} alt="edit" />
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          </div>
-          <div className="movie-pagination">
-            <div className="movie-pagination-navigators-container">
-              <div className="movie-pagination-navigators active">1</div>
-              <div className="movie-pagination-navigators">2</div>
-              <div className="movie-pagination-navigators">3</div>
-              <div className="movie-pagination-navigators">4</div>
-              <div className="movie-pagination-navigators">5</div>
+        {movieData.length !== 0 ? (
+          <div className="movie-list">
+            <div className="movie-list-search-sort">
+              <input type="text" placeholder="search" />
+              <select name="sort" id="sort">
+                <option value="userName">user name</option>
+                <option value="movieName">movie name</option>
+                <option value="movieRating">movie rating</option>
+              </select>
             </div>
-            <button>Download PDF</button>
+            <div className="movie-list-table">
+              <table>
+                <thead>
+                  <tr>
+                    <th>movie name</th>
+                    <th>movie rating</th>
+                    <th>user name</th>
+                    <th>actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {movieData.map((items) => {
+                    return (
+                      <tr key={items._id}>
+                        <td>{items.movieName}</td>
+                        <td>{items.movieRating}</td>
+                        <td>{items.userName}</td>
+                        <td>
+                          <img src={editIcon} alt="edit" />
+                          <img src={deleteIcon} alt="edit" />
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+            <div className="movie-pagination">
+              <div className="movie-pagination-navigators-container">
+                <div className="movie-pagination-navigators active">1</div>
+                <div className="movie-pagination-navigators">2</div>
+                <div className="movie-pagination-navigators">3</div>
+                <div className="movie-pagination-navigators">4</div>
+                <div className="movie-pagination-navigators">5</div>
+              </div>
+              <button>Download PDF</button>
+            </div>
           </div>
-        </div>
+        ) : (
+          <h1>no movies added yet</h1>
+        )}
       </div>
     </div>
   );
