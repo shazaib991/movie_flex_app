@@ -8,6 +8,8 @@ function MovieSection() {
   const [userName, setUserName] = useState("");
   const [movieName, setMovieName] = useState("");
   const [movieRating, setMovieRating] = useState("");
+  const [requestMessage, setRequestMessage] = useState({});
+  const [showRequestMessage, setShowRequestMessage] = useState(false);
 
   const handleMovieNameChange = (e) => {
     setMovieName(e.target.value);
@@ -22,13 +24,39 @@ function MovieSection() {
   };
 
   const handleSubmit = async () => {
-    const response = await axios.post("http://localhost:5000/api/v1/movies", {
-      movieName,
-      movieRating,
-      userName,
-    });
-    if (response.status === 200) {
-      console.log(response);
+    if (movieName === "" || movieRating === "" || userName === "") {
+      requestMessage.values = { msg: "please enter values", type: "warning" };
+      setRequestMessage(requestMessage);
+      setShowRequestMessage(true);
+      return setTimeout(() => {
+        setShowRequestMessage(false);
+      }, 2000);
+    }
+    try {
+      const response = await axios.post("http://localhost:5000/api/v1/movies", {
+        movieName,
+        movieRating,
+        userName,
+      });
+      if (response.status === 200) {
+        requestMessage.values = {
+          msg: "successfully submited",
+          type: "success",
+        };
+        setRequestMessage(requestMessage);
+        setShowRequestMessage(true);
+        return setTimeout(() => {
+          setShowRequestMessage(false);
+        }, 2000);
+      }
+      requestMessage.values = { msg: "error try again later", type: "error" };
+      setRequestMessage(requestMessage);
+      setShowRequestMessage(true);
+      setTimeout(() => {
+        setShowRequestMessage(false);
+      }, 2000);
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -66,6 +94,13 @@ function MovieSection() {
               onChange={handleUserNameChange}
             />
             <div className="movie-form-btn">
+              {showRequestMessage && (
+                <div
+                  className={`request-message ${requestMessage.values.type}`}
+                >
+                  {requestMessage.values.msg}
+                </div>
+              )}
               <button onClick={handleSubmit}>submit</button>
             </div>
           </div>

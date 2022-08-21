@@ -23,6 +23,34 @@
     flex-direction: column;
     align-items: center;
     border-radius: 0.8rem;
+    position: relative;
+}
+
+.request-message{
+    height: 3rem;
+    width: 20rem;
+    position: absolute;
+    bottom: 1.9rem;
+    left: 2.7%;
+    color: white;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.7rem;
+}
+
+.request-message.warning{
+    background-color: #ffc107;
+}
+
+.request-message.success{
+    background-color: #28a745;
+}
+
+.request-message.error{
+    background-color: #dc3545;
 }
 
 /* movie form */
