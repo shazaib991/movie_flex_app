@@ -75,6 +75,16 @@ function MovieSection() {
     fetchMovieData();
   }, [movieData]);
 
+  const handleMovieDelete = async (movieId) => {
+    const response = await axios.delete(
+      `http://localhost:5000/api/v1/movies/${movieId}`
+    );
+
+    if (response.status === 200) {
+      console.log("deleted");
+    }
+  };
+
   return (
     <div className="movie-container">
       <div className="movie">
@@ -149,7 +159,11 @@ function MovieSection() {
                         <td>{items.userName}</td>
                         <td>
                           <img src={editIcon} alt="edit" />
-                          <img src={deleteIcon} alt="edit" />
+                          <img
+                            src={deleteIcon}
+                            alt="edit"
+                            onClick={() => handleMovieDelete(items._id)}
+                          />
                         </td>
                       </tr>
                     );
