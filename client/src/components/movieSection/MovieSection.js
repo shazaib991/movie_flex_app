@@ -1,17 +1,43 @@
-import React from "react";
+import React, { useState } from "react";
 import "./movieSection.css";
 import editIcon from "../../icons/icons8-edit-384.png";
 import deleteIcon from "../../icons/icons8-delete-144.png";
 
 function MovieSection() {
+  const [userName, setUserName] = useState("");
+  const [movieName, setMovieName] = useState("");
+  const [movieRating, setMovieRating] = useState("");
+
+  const handleMovieNameChange = (e) => {
+    setMovieName(e.target.value);
+  };
+
+  const handleMovieRatingChange = (e) => {
+    setMovieRating(e.target.value);
+  };
+
+  const handleUserNameChange = (e) => {
+    setUserName(e.target.value);
+  };
+
   return (
     <div className="movie-container">
       <div className="movie">
         <h1>movies</h1>
         <div className="movie-form-container">
           <div className="movie-form">
-            <input type="text" placeholder="enter name of movie" />
-            <select name="movie-rating" id="movie-rating">
+            <input
+              type="text"
+              placeholder="enter name of movie"
+              value={movieName}
+              onChange={handleMovieNameChange}
+            />
+            <select
+              name="movie-rating"
+              id="movie-rating"
+              value={movieRating}
+              onChange={handleMovieRatingChange}
+            >
               <option value="rate this movie" disabled>
                 rate this movie
               </option>
@@ -21,7 +47,12 @@ function MovieSection() {
               <option value="4">4</option>
               <option value="5">5</option>
             </select>
-            <input type="text" placeholder="enter your name" />
+            <input
+              type="text"
+              placeholder="enter your name"
+              value={userName}
+              onChange={handleUserNameChange}
+            />
             <div className="movie-form-btn">
               <button>submit</button>
             </div>
