@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./movieSection.css";
 import editIcon from "../../icons/icons8-edit-384.png";
 import deleteIcon from "../../icons/icons8-delete-144.png";
+import axios from "axios";
 
 function MovieSection() {
   const [userName, setUserName] = useState("");
@@ -18,6 +19,17 @@ function MovieSection() {
 
   const handleUserNameChange = (e) => {
     setUserName(e.target.value);
+  };
+
+  const handleSubmit = async () => {
+    const response = await axios.post("http://localhost:5000/api/v1/movies", {
+      movieName,
+      movieRating,
+      userName,
+    });
+    if (response.status === 200) {
+      console.log(response);
+    }
   };
 
   return (
@@ -54,7 +66,7 @@ function MovieSection() {
               onChange={handleUserNameChange}
             />
             <div className="movie-form-btn">
-              <button>submit</button>
+              <button onClick={handleSubmit}>submit</button>
             </div>
           </div>
         </div>
