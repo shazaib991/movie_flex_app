@@ -11,6 +11,8 @@ function MovieSection() {
   const [requestMessage, setRequestMessage] = useState({});
   const [showRequestMessage, setShowRequestMessage] = useState(false);
   const [movieData, setMovieData] = useState([]);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [movieId, setMovieId] = useState("");
 
   const handleMovieNameChange = (e) => {
     setMovieName(e.target.value);
@@ -81,8 +83,19 @@ function MovieSection() {
     );
 
     if (response.status === 200) {
-      console.log("deleted");
+      setShowDeleteModal(false);
+      setMovieId("");
     }
+  };
+
+  const handleDeleteModal = (movieId) => {
+    setMovieId(movieId);
+    setShowDeleteModal(true);
+  };
+
+  const handleCalcelDeleteModal = () => {
+    setMovieId("");
+    setShowDeleteModal(false);
   };
 
   return (
@@ -103,9 +116,7 @@ function MovieSection() {
               value={movieRating}
               onChange={handleMovieRatingChange}
             >
-              <option value="rate this movie" disabled>
-                rate this movie
-              </option>
+              <option value="rate this movie">rate this movie</option>
               <option value="1">1</option>
               <option value="2">2</option>
               <option value="3">3</option>
@@ -162,7 +173,7 @@ function MovieSection() {
                           <img
                             src={deleteIcon}
                             alt="edit"
-                            onClick={() => handleMovieDelete(items._id)}
+                            onClick={() => handleDeleteModal(items._id)}
                           />
                         </td>
                       </tr>
@@ -186,6 +197,17 @@ function MovieSection() {
           <h1>no movies added yet</h1>
         )}
       </div>
+      {showDeleteModal && (
+        <div className={"delete-modal-container"}>
+          <div className="delete-modal">
+            <h1>are you sure?</h1>
+            <div className="delete-modal-btns">
+              <button onClick={handleCalcelDeleteModal}>cancel</button>
+              <button onClick={() => handleMovieDelete(movieId)}>delete</button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
