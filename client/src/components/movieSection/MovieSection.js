@@ -3,6 +3,8 @@ import "./movieSection.css";
 import editIcon from "../../icons/icons8-edit-384.png";
 import deleteIcon from "../../icons/icons8-delete-144.png";
 import axios from "axios";
+import jsPDF from "jspdf";
+import "jspdf-autotable";
 
 function MovieSection() {
   const [userName, setUserName] = useState("");
@@ -168,6 +170,12 @@ function MovieSection() {
     setShowEditModal(false);
   };
 
+  const downloadMoviesPdf = () => {
+    const pdf = new jsPDF();
+    pdf.autoTable({ html: "#movie-table" });
+    pdf.save("Movies.pdf");
+  };
+
   return (
     <div className="movie-container">
       <div className="movie">
@@ -222,7 +230,7 @@ function MovieSection() {
               </select>
             </div>
             <div className="movie-list-table">
-              <table>
+              <table id="movie-table">
                 <thead>
                   <tr>
                     <th>movie name</th>
@@ -264,7 +272,7 @@ function MovieSection() {
                 <div className="movie-pagination-navigators">4</div>
                 <div className="movie-pagination-navigators">5</div>
               </div>
-              <button>Download PDF</button>
+              <button onClick={downloadMoviesPdf}>Download PDF</button>
             </div>
           </div>
         ) : (
