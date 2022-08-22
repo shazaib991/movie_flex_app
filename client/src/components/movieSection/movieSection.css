@@ -235,17 +235,14 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 0 1rem;
+    padding: 3rem 1rem;
     border-radius: 0.8rem;
+    position: relative;
 }
 
 .delete-modal h1{
     margin: 2rem 0 10rem 0;
     font-size: 2.5rem;
-}
-
-.delete-modal-btns{
-    margin-bottom: 2rem;
 }
 
 .delete-modal-btns button:first-child{
@@ -287,7 +284,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 0 1rem;
+    padding: 3rem 1rem;
     border-radius: 0.8rem;
     position: relative;
 }
@@ -311,10 +308,6 @@
 
 .edit-modal > select option{
     color: gray;
-}
-
-.edit-modal-btns{
-    margin-bottom: 2rem;
 }
 
 .edit-modal-btns button:first-child{
@@ -342,7 +335,7 @@
     width: 20rem;
     position: absolute;
     top: 0.5rem;
-    left: 50%;
+    left: 5%;
     color: white;
     padding: 1rem;
     border-radius: 0.5rem;

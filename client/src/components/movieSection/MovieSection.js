@@ -100,12 +100,26 @@ function MovieSection() {
     );
 
     if (response.status === 200) {
-      setShowDeleteModal(false);
+      requestMessage.values = { msg: "successfully deleted", type: "success" };
+      setRequestMessage(requestMessage);
+      setShowModalRequestMessage(true);
+      setTimeout(() => {
+        setShowModalRequestMessage(false);
+        setShowDeleteModal(false);
+      }, 2000);
       setMovieId("");
     }
   };
 
   const handleMovieEdit = async (movieId) => {
+    if (editMovieName === "" || editMovieRating === "" || editUserName === "") {
+      requestMessage.values = { msg: "please enter values", type: "warning" };
+      setRequestMessage(requestMessage);
+      setShowModalRequestMessage(true);
+      return setTimeout(() => {
+        setShowModalRequestMessage(false);
+      }, 2000);
+    }
     const response = await axios.patch(
       `http://localhost:5000/api/v1/movies/${movieId}`,
       {
@@ -120,7 +134,7 @@ function MovieSection() {
       setRequestMessage(requestMessage);
       setShowModalRequestMessage(true);
       setTimeout(() => {
-        setShowRequestMessage(false);
+        setShowModalRequestMessage(false);
         setShowEditModal(false);
       }, 2000);
       setMovieId("");
