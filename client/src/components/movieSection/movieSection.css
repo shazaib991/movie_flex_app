@@ -389,4 +389,17 @@
         text-align: left;
         color: #8da7ff;
     }
+
+    .movie-form{
+        display: block;
+    }
+
+    .movie-form-btn > button{
+        margin: 3rem 0 2rem 0;
+        width: 100%;
+    }
+
+    .request-message{
+        bottom: 6.5rem;
+    }
 }
