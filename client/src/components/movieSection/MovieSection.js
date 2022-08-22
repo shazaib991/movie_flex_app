@@ -20,6 +20,7 @@ function MovieSection() {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const [movieId, setMovieId] = useState("");
+  const [search, setSearch] = useState("");
 
   const handleMovieNameChange = (e) => {
     setMovieName(e.target.value);
@@ -176,6 +177,10 @@ function MovieSection() {
     pdf.save("Movies.pdf");
   };
 
+  const handleSearchChange = (e) => {
+    setSearch(e.target.value);
+  };
+
   return (
     <div className="movie-container">
       <div className="movie">
@@ -222,7 +227,12 @@ function MovieSection() {
         {movieData.length !== 0 ? (
           <div className="movie-list">
             <div className="movie-list-search-sort">
-              <input type="text" placeholder="search" />
+              <input
+                type="text"
+                placeholder="search"
+                value={search}
+                onChange={handleSearchChange}
+              />
               <select name="sort" id="sort">
                 <option value="userName">user name</option>
                 <option value="movieName">movie name</option>
@@ -240,27 +250,43 @@ function MovieSection() {
                   </tr>
                 </thead>
                 <tbody>
-                  {movieData.map((items) => {
-                    return (
-                      <tr key={items._id}>
-                        <td>{items.movieName}</td>
-                        <td>{items.movieRating}</td>
-                        <td>{items.userName}</td>
-                        <td>
-                          <img
-                            src={editIcon}
-                            alt="edit"
-                            onClick={() => handleEditModal(items._id)}
-                          />
-                          <img
-                            src={deleteIcon}
-                            alt="edit"
-                            onClick={() => handleDeleteModal(items._id)}
-                          />
-                        </td>
-                      </tr>
-                    );
-                  })}
+                  {movieData
+                    .filter((item) => {
+                      if (search === "") {
+                        return item;
+                      } else if (
+                        item.movieName
+                          .toLowerCase()
+                          .includes(search.toLowerCase()) ||
+                        item.movieRating.includes(search.toLowerCase()) ||
+                        item.userName
+                          .toLowerCase()
+                          .includes(search.toLowerCase())
+                      ) {
+                        return item;
+                      }
+                    })
+                    .map((items) => {
+                      return (
+                        <tr key={items._id}>
+                          <td>{items.movieName}</td>
+                          <td>{items.movieRating}</td>
+                          <td>{items.userName}</td>
+                          <td>
+                            <img
+                              src={editIcon}
+                              alt="edit"
+                              onClick={() => handleEditModal(items._id)}
+                            />
+                            <img
+                              src={deleteIcon}
+                              alt="edit"
+                              onClick={() => handleDeleteModal(items._id)}
+                            />
+                          </td>
+                        </tr>
+                      );
+                    })}
                 </tbody>
               </table>
             </div>
