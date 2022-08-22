@@ -74,6 +74,10 @@
         margin: 0 0 1rem 0;
     }
 
+    .navbar-link a{
+        margin: 0;
+    }
+
     .burger-nav{
         display: flex;
         flex-direction: column;

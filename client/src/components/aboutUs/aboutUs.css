@@ -3,17 +3,18 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    position: relative;
 }
 
 .aboutUs{
     height: 40rem;
     width: 100%;
-    position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
     margin-top: 5rem;
     padding: 0 5rem;
+    max-width: 1440px;
 }
 
 .aboutUs p{
@@ -21,7 +22,7 @@
     font-size: 1.7rem;
 }
 
-.aboutUs::before{
+.aboutUs-container::before{
     content: "";
     background: url("../../images/jean-philippe-delberghe-75xPHEQBmvA-unsplash.jpg");
     background-position: center;
