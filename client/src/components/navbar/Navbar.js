@@ -1,11 +1,17 @@
-import React from "react";
+import React, { useRef } from "react";
 import { Link } from "react-router-dom";
 import "./navbar.css";
 
 function Navbar() {
+  const navbarRef = useRef(null);
+
+  const handleBurgerNavbar = () => {
+    navbarRef.current.classList.toggle("active");
+  };
+
   return (
     <nav className="navbar-container">
-      <div className="navbar">
+      <div className="navbar" ref={navbarRef}>
         <div className="navbar-logo">movie flex</div>
         <ul className="navbar-links">
           <li className="navbar-link">
@@ -18,6 +24,11 @@ function Navbar() {
             <Link to="/contactUs">contact us</Link>
           </li>
         </ul>
+        <div className="burger-nav" onClick={handleBurgerNavbar}>
+          <div className="bar"></div>
+          <div className="bar"></div>
+          <div className="bar"></div>
+        </div>
       </div>
     </nav>
   );

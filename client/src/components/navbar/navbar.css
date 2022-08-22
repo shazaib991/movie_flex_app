@@ -1,6 +1,5 @@
 /* navbar */
 .navbar-container{
-    height: 7rem;
     width: 100%;
     background-color: #5973ff;
     display: flex;
@@ -16,6 +15,8 @@
     align-items: center;
     justify-content: space-between;
     max-width: 1440px;
+    position: relative;
+    margin: 2rem;
 }
 
 .navbar-logo{
@@ -35,4 +36,50 @@
     margin-left: 3rem;
     letter-spacing: 0.1rem;
     color: white;
+}
+
+.burger-nav{
+    width: 3rem;
+    height: 2rem;
+    display: none;
+}
+
+.bar{
+    height: 0.2rem;
+    width: 100%;
+    background-color: white;
+    border-radius: 0.5rem;
+}
+
+@media screen and (max-width: 768px){
+    .navbar.active{
+        flex-direction: column;
+        align-items: start;
+        justify-content: center;
+    }
+
+    .navbar-links{
+        display: none;
+    }
+
+     .navbar.active .navbar-links{
+        display: flex;
+        flex-direction: column;
+        margin-top: 1.5rem;
+        width: 100%;
+    }
+
+    .navbar-link{
+        text-align: center;
+        margin: 0 0 1rem 0;
+    }
+
+    .burger-nav{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        position: absolute;
+        right: 0;
+        top: 0.4rem;
+    }
 }
