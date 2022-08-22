@@ -60,3 +60,13 @@
     padding: 1rem;
     border-radius: 0.5rem;
 }
+
+@media screen and (max-width: 768px) {
+    .contact-us{
+        flex-direction: column;
+    }
+
+    .contact-us p{
+        margin-bottom: 4rem;
+    }
+}
