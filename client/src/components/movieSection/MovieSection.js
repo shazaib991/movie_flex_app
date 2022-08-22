@@ -269,10 +269,10 @@ function MovieSection() {
                     .map((items) => {
                       return (
                         <tr key={items._id}>
-                          <td>{items.movieName}</td>
-                          <td>{items.movieRating}</td>
-                          <td>{items.userName}</td>
-                          <td>
+                          <td data-label="movie name">{items.movieName}</td>
+                          <td data-label="movie rating">{items.movieRating}</td>
+                          <td data-label="user name">{items.userName}</td>
+                          <td data-label="actions">
                             <img
                               src={editIcon}
                               alt="edit"
