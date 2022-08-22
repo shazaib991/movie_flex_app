@@ -402,4 +402,26 @@
     .request-message{
         bottom: 6.5rem;
     }
+
+    .movie-list-search-sort{
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .movie-list-search-sort input{
+        margin-bottom: 1rem;
+    }
+
+    .movie-pagination{
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .movie-pagination-navigators-container{
+        margin-bottom: 2rem;
+    }
+
+    .movie-pagination button{
+        width: 100%;
+    }
 }
