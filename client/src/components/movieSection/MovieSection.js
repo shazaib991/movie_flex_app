@@ -8,8 +8,12 @@ function MovieSection() {
   const [userName, setUserName] = useState("");
   const [movieName, setMovieName] = useState("");
   const [movieRating, setMovieRating] = useState("");
+  const [editUserName, setEditUserName] = useState("");
+  const [editMovieName, setEditMovieName] = useState("");
+  const [editMovieRating, setEditMovieRating] = useState("");
   const [requestMessage, setRequestMessage] = useState({});
   const [showRequestMessage, setShowRequestMessage] = useState(false);
+  const [showModalRequestMessage, setShowModalRequestMessage] = useState(false);
   const [movieData, setMovieData] = useState([]);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
@@ -25,6 +29,18 @@ function MovieSection() {
 
   const handleUserNameChange = (e) => {
     setUserName(e.target.value);
+  };
+
+  const handleEditMovieNameChange = (e) => {
+    setEditMovieName(e.target.value);
+  };
+
+  const handleEditMovieRatingChange = (e) => {
+    setEditMovieRating(e.target.value);
+  };
+
+  const handleEditUserNameChange = (e) => {
+    setEditUserName(e.target.value);
   };
 
   const handleSubmit = async () => {
@@ -90,12 +106,23 @@ function MovieSection() {
   };
 
   const handleMovieEdit = async (movieId) => {
-    const response = await axios.update(
-      `http://localhost:5000/api/v1/movies/${movieId}`
+    const response = await axios.patch(
+      `http://localhost:5000/api/v1/movies/${movieId}`,
+      {
+        movieName: editMovieName,
+        movieRating: editMovieRating,
+        userName: editUserName,
+      }
     );
 
     if (response.status === 200) {
-      setShowEditModal(false);
+      requestMessage.values = { msg: "successfully updated", type: "success" };
+      setRequestMessage(requestMessage);
+      setShowModalRequestMessage(true);
+      setTimeout(() => {
+        setShowRequestMessage(false);
+        setShowEditModal(false);
+      }, 2000);
       setMovieId("");
     }
   };
@@ -107,6 +134,10 @@ function MovieSection() {
 
   const handleEditModal = (movieId) => {
     setMovieId(movieId);
+    const selectedMovieData = movieData.filter((item) => item._id === movieId);
+    setEditMovieName(selectedMovieData[0].movieName);
+    setEditMovieRating(selectedMovieData[0].movieRating);
+    setEditUserName(selectedMovieData[0].userName);
     setShowEditModal(true);
   };
 
@@ -117,6 +148,9 @@ function MovieSection() {
 
   const handleCancelEditModal = () => {
     setMovieId("");
+    setEditMovieName("");
+    setEditMovieRating("");
+    setEditUserName("");
     setShowEditModal(false);
   };
 
@@ -226,6 +260,13 @@ function MovieSection() {
       {showDeleteModal && (
         <div className={"delete-modal-container"}>
           <div className="delete-modal">
+            {showModalRequestMessage && (
+              <div
+                className={`modal-request-message ${requestMessage.values.type}`}
+              >
+                {requestMessage.values.msg}
+              </div>
+            )}
             <h1>are you sure?</h1>
             <div className="delete-modal-btns">
               <button onClick={handleCancelDeleteModal}>cancel</button>
@@ -235,10 +276,41 @@ function MovieSection() {
         </div>
       )}
       {showEditModal && (
-        <div className={"delete-modal-container"}>
-          <div className="delete-modal">
-            <h1>are you sure?</h1>
-            <div className="delete-modal-btns">
+        <div className={"edit-modal-container"}>
+          <div className="edit-modal">
+            {showModalRequestMessage && (
+              <div
+                className={`modal-request-message ${requestMessage.values.type}`}
+              >
+                {requestMessage.values.msg}
+              </div>
+            )}
+            <input
+              type="text"
+              placeholder="enter name of movie"
+              value={editMovieName}
+              onChange={handleEditMovieNameChange}
+            />
+            <select
+              name="movie-rating"
+              id="movie-rating"
+              value={editMovieRating}
+              onChange={handleEditMovieRatingChange}
+            >
+              <option value="rate this movie">rate this movie</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+            </select>
+            <input
+              type="text"
+              placeholder="enter your name"
+              value={editUserName}
+              onChange={handleEditUserNameChange}
+            />
+            <div className="edit-modal-btns">
               <button onClick={handleCancelEditModal}>cancel</button>
               <button onClick={() => handleMovieEdit(movieId)}>update</button>
             </div>
