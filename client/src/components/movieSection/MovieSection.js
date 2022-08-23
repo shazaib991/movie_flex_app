@@ -81,16 +81,20 @@ function MovieSection() {
       setTimeout(() => {
         setShowRequestMessage(false);
       }, 2000);
-    } catch (error) {
-      console.log(error);
+    } catch (err) {
+      console.log(err);
     }
   };
 
   const fetchMovieData = async () => {
-    const response = await axios.get("http://localhost:5000/api/v1/movies");
-    const movies = response.data;
+    try {
+      const response = await axios.get("http://localhost:5000/api/v1/movies");
+      const movies = response.data;
 
-    setMovieData(movies);
+      setMovieData(movies);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   useEffect(() => {
@@ -98,19 +102,34 @@ function MovieSection() {
   }, [movieData]);
 
   const handleMovieDelete = async (movieId) => {
-    const response = await axios.delete(
-      `http://localhost:5000/api/v1/movies/${movieId}`
-    );
+    try {
+      const response = await axios.delete(
+        `http://localhost:5000/api/v1/movies/${movieId}`
+      );
 
-    if (response.status === 200) {
-      requestMessage.values = { msg: "successfully deleted", type: "success" };
+      if (response.status === 200) {
+        requestMessage.values = {
+          msg: "successfully deleted",
+          type: "success",
+        };
+        setRequestMessage(requestMessage);
+        setShowModalRequestMessage(true);
+        return setTimeout(() => {
+          setShowModalRequestMessage(false);
+          setMovieId("");
+          setShowDeleteModal(false);
+        }, 2000);
+      }
+      requestMessage.values = { msg: "error try again later", type: "error" };
       setRequestMessage(requestMessage);
       setShowModalRequestMessage(true);
       setTimeout(() => {
         setShowModalRequestMessage(false);
+        setMovieId("");
         setShowDeleteModal(false);
       }, 2000);
-      setMovieId("");
+    } catch (err) {
+      console.log(err);
     }
   };
 
@@ -123,24 +142,40 @@ function MovieSection() {
         setShowModalRequestMessage(false);
       }, 2000);
     }
-    const response = await axios.patch(
-      `http://localhost:5000/api/v1/movies/${movieId}`,
-      {
-        movieName: editMovieName,
-        movieRating: editMovieRating,
-        userName: editUserName,
-      }
-    );
 
-    if (response.status === 200) {
-      requestMessage.values = { msg: "successfully updated", type: "success" };
+    try {
+      const response = await axios.patch(
+        `http://localhost:5000/api/v1/movies/${movieId}`,
+        {
+          movieName: editMovieName,
+          movieRating: editMovieRating,
+          userName: editUserName,
+        }
+      );
+
+      if (response.status === 200) {
+        requestMessage.values = {
+          msg: "successfully updated",
+          type: "success",
+        };
+        setRequestMessage(requestMessage);
+        setShowModalRequestMessage(true);
+        setTimeout(() => {
+          setShowModalRequestMessage(false);
+          setShowEditModal(false);
+        }, 2000);
+        setMovieId("");
+      }
+      requestMessage.values = { msg: "error try again later", type: "error" };
       setRequestMessage(requestMessage);
       setShowModalRequestMessage(true);
       setTimeout(() => {
         setShowModalRequestMessage(false);
+        setMovieId("");
         setShowEditModal(false);
       }, 2000);
-      setMovieId("");
+    } catch (err) {
+      console.log(err);
     }
   };
 

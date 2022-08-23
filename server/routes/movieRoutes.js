@@ -7,24 +7,46 @@ const movies = new dataStore({
 });
 
 router.get("/", (req, res) => {
-  movies.find({}, (err, data) => {
-    if (err) {
-      return res.status(500).json({ msg: err });
-    }
-    res.json(data);
-  });
+  try {
+    movies.find({}, (err, data) => {
+      if (err) {
+        return res.status(500).json({ msg: err });
+      }
+      res.json(data);
+    });
+  } catch (err) {
+    console.log(err);
+  }
 });
 
 router.post("/", (req, res) => {
   try {
-    movies.insert(req.body, (err, data) => {
-      if (err) {
-        return res.status(500).json({ msg: err });
+    let uniqueMovieAndUserCheck = false;
+
+    movies.find({}, (err, data) => {
+      data.map((items) => {
+        if (
+          items.movieName.toLowerCase() === req.body.movieName.toLowerCase() &&
+          items.userName.toLowerCase() === req.body.userName.toLowerCase()
+        ) {
+          uniqueMovieAndUserCheck = true;
+        }
+      });
+
+      if (uniqueMovieAndUserCheck) {
+        return res
+          .status(405)
+          .json({ msg: "same movie name and user not allowed" });
       }
-      res.json({ msg: "movie added successfully", id: data._id });
+      movies.insert(req.body, (err, data) => {
+        if (err) {
+          return res.status(500).json({ msg: err });
+        }
+        res.json({ msg: "movie added successfully", id: data._id });
+      });
     });
   } catch (err) {
-    return res.status(500).json({ msg: err });
+    console.log(err);
   }
 });
 
@@ -42,7 +64,7 @@ router.patch("/:id", (req, res) => {
       }
     );
   } catch (err) {
-    return res.status(500).json({ msg: err });
+    console.log(err);
   }
 });
 
@@ -55,7 +77,7 @@ router.delete("/:id", (req, res) => {
       res.json({ msg: "movie deleted successfully" });
     });
   } catch (err) {
-    return res.status(500).json({ msg: err });
+    console.log(err);
   }
 });
 
