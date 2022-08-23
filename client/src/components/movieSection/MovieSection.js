@@ -61,7 +61,7 @@ function MovieSection() {
         movieRating,
         userName,
       });
-      if (response.status === 200) {
+      if (response.data.msg === "movie added successfully") {
         requestMessage.values = {
           msg: "successfully submited",
           type: "success",
@@ -71,6 +71,17 @@ function MovieSection() {
         setMovieName("");
         setMovieRating("");
         setUserName("");
+        return setTimeout(() => {
+          setShowRequestMessage(false);
+        }, 2000);
+      }
+      if (response.data.msg === "same movie name and user not allowed") {
+        requestMessage.values = {
+          msg: "same movie name with user not allowed",
+          type: "warning",
+        };
+        setRequestMessage(requestMessage);
+        setShowRequestMessage(true);
         return setTimeout(() => {
           setShowRequestMessage(false);
         }, 2000);
@@ -160,11 +171,11 @@ function MovieSection() {
         };
         setRequestMessage(requestMessage);
         setShowModalRequestMessage(true);
-        setTimeout(() => {
+        return setTimeout(() => {
           setShowModalRequestMessage(false);
+          setMovieId("");
           setShowEditModal(false);
         }, 2000);
-        setMovieId("");
       }
       requestMessage.values = { msg: "error try again later", type: "error" };
       setRequestMessage(requestMessage);
@@ -287,19 +298,19 @@ function MovieSection() {
                 <tbody>
                   {movieData
                     .filter((item) => {
-                      if (search === "") {
-                        return item;
-                      } else if (
-                        item.movieName
-                          .toLowerCase()
-                          .includes(search.toLowerCase()) ||
-                        item.movieRating.includes(search.toLowerCase()) ||
+                      if (
+                        (search !== "" &&
+                          item.movieName
+                            .toLowerCase()
+                            .includes(search.toLowerCase())) ||
+                        item.movieRating === search ||
                         item.userName
                           .toLowerCase()
                           .includes(search.toLowerCase())
                       ) {
                         return item;
                       }
+                      return false;
                     })
                     .map((items) => {
                       return (

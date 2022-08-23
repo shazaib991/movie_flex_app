@@ -35,7 +35,7 @@ router.post("/", (req, res) => {
 
       if (uniqueMovieAndUserCheck) {
         return res
-          .status(405)
+          .status(200)
           .json({ msg: "same movie name and user not allowed" });
       }
       movies.insert(req.body, (err, data) => {

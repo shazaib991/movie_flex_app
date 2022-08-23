@@ -30,7 +30,7 @@
 
 .request-message{
     height: 3rem;
-    width: 20rem;
+    width: 40%;
     position: absolute;
     bottom: 1.9rem;
     left: 2.7%;
@@ -400,6 +400,7 @@
     }
 
     .request-message{
+        width: 95%;
         bottom: 6.5rem;
     }
 
