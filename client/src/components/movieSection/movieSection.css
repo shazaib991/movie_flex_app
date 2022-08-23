@@ -65,23 +65,11 @@
 
 .movie-form > input{
     width: 100%;
-    margin: 1.5rem 0;
+    margin: 1.1rem 0;
     outline: none;
     border: none;
     padding: 1rem;
     border-radius: 0.5rem;
-}
-
-.movie-form > select{
-    width: 100%;
-    outline: none;
-    border: none;
-    padding: 1rem;
-    border-radius: 0.5rem;
-}
-
-.movie-form > select option{
-    color: gray;
 }
 
 .movie-form-btn > button{

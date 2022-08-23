@@ -21,12 +21,16 @@ function MovieSection() {
   const [showEditModal, setShowEditModal] = useState(false);
   const [movieId, setMovieId] = useState("");
   const [search, setSearch] = useState("");
+  const [sort, setSort] = useState("");
 
   const handleMovieNameChange = (e) => {
     setMovieName(e.target.value);
   };
 
   const handleMovieRatingChange = (e) => {
+    if (e.target.value > 5 || (e.target.value < 1 && movieRating === "")) {
+      return;
+    }
     setMovieRating(e.target.value);
   };
 
@@ -44,6 +48,13 @@ function MovieSection() {
 
   const handleEditUserNameChange = (e) => {
     setEditUserName(e.target.value);
+  };
+
+  const handleSortChange = (e) => {
+    if (e.target.value === "sort") {
+      return;
+    }
+    setSort(e.target.value);
   };
 
   const handleSubmit = async () => {
@@ -239,19 +250,14 @@ function MovieSection() {
               value={movieName}
               onChange={handleMovieNameChange}
             />
-            <select
-              name="movie-rating"
-              id="movie-rating"
+            <input
+              type="number"
+              placeholder="enter movie rating"
               value={movieRating}
               onChange={handleMovieRatingChange}
-            >
-              <option value="rate this movie">rate this movie</option>
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5">5</option>
-            </select>
+              min={1}
+              max={5}
+            />
             <input
               type="text"
               placeholder="enter your name"
@@ -279,10 +285,17 @@ function MovieSection() {
                 value={search}
                 onChange={handleSearchChange}
               />
-              <select name="sort" id="sort">
+              <select
+                name="sort"
+                id="sort"
+                value={sort}
+                onChange={handleSortChange}
+              >
+                <option>sort</option>
                 <option value="userName">user name</option>
                 <option value="movieName">movie name</option>
                 <option value="movieRating">movie rating</option>
+                <option value="noSort">no sort</option>
               </select>
             </div>
             <div className="movie-list-table">
@@ -312,6 +325,21 @@ function MovieSection() {
                       }
                       return false;
                     })
+                    .sort((a, b) => {
+                      if (sort === "movieName") {
+                        return a.movieName > b.movieName ? 1 : -1;
+                      }
+                      if (sort === "movieRating") {
+                        return a.movieRating > b.movieRating ? 1 : -1;
+                      }
+                      if (sort === "userName") {
+                        return a.userName > b.userName ? 1 : -1;
+                      }
+                      if (sort === "noSort") {
+                        return;
+                      }
+                      return false;
+                    })
                     .map((items) => {
                       return (
                         <tr key={items._id}>
@@ -326,7 +354,7 @@ function MovieSection() {
                             />
                             <img
                               src={deleteIcon}
-                              alt="edit"
+                              alt="delete"
                               onClick={() => handleDeleteModal(items._id)}
                             />
                           </td>
