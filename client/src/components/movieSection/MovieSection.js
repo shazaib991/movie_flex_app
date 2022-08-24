@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import "./movieSection.css";
 import editIcon from "../../icons/icons8-edit-384.png";
 import deleteIcon from "../../icons/icons8-delete-144.png";
@@ -17,6 +17,7 @@ function MovieSection() {
   const [showRequestMessage, setShowRequestMessage] = useState(false);
   const [showModalRequestMessage, setShowModalRequestMessage] = useState(false);
   const [movieData, setMovieData] = useState([]);
+  const [paginationMovieData, setPaginationMovieData] = useState([]);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const [movieId, setMovieId] = useState("");
@@ -24,6 +25,9 @@ function MovieSection() {
   const [sort, setSort] = useState("");
   const [averageMovieRating, setAverageMovieRating] = useState("");
   const [averageMovieRatingResult, setAverageMovieRatingResult] = useState("");
+  const [currentMoviePage, setCurrentMoviePage] = useState(1);
+  const [moviesPerPage, setMoviesPerPage] = useState(5);
+  const [moviePageNumbers, setMoviePageNumbers] = useState([]);
 
   const handleMovieNameChange = (e) => {
     setMovieName(e.target.value);
@@ -45,6 +49,9 @@ function MovieSection() {
   };
 
   const handleEditMovieRatingChange = (e) => {
+    if (e.target.value > 5 || (e.target.value < 1 && editMovieRating === "")) {
+      return;
+    }
     setEditMovieRating(e.target.value);
   };
 
@@ -54,6 +61,17 @@ function MovieSection() {
 
   const handleAverageMovieRatingChange = (e) => {
     setAverageMovieRating(e.target.value);
+  };
+
+  const handlePaginationNavigation = (e) => {
+    setCurrentMoviePage(Number(e.target.innerText));
+  };
+
+  const handleMoviesPerPageChange = (e) => {
+    if (e.target.value === "movies per page") {
+      return;
+    }
+    setMoviesPerPage(Number(e.target.value));
   };
 
   const handleSortChange = (e) => {
@@ -114,20 +132,23 @@ function MovieSection() {
     }
   };
 
-  const fetchMovieData = async () => {
+  const fetchMovieData = useCallback(async () => {
     try {
       const response = await axios.get("http://localhost:5000/api/v1/movies");
       const movies = response.data;
 
+      const indexOfLastMovie = currentMoviePage * moviesPerPage;
+      const indexOfFirstMovie = indexOfLastMovie - moviesPerPage;
       setMovieData(movies);
+      setPaginationMovieData(movies.slice(indexOfFirstMovie, indexOfLastMovie));
     } catch (err) {
       console.log(err);
     }
-  };
+  }, [currentMoviePage, moviesPerPage]);
 
   useEffect(() => {
     fetchMovieData();
-  }, [movieData]);
+  }, [fetchMovieData, movieData]);
 
   const handleMovieDelete = async (movieId) => {
     try {
@@ -264,6 +285,15 @@ function MovieSection() {
     }
   };
 
+  useEffect(() => {
+    const pageArray = [];
+
+    for (let i = 1; i <= Math.ceil(movieData.length / moviesPerPage); i++) {
+      pageArray.push(i);
+    }
+    setMoviePageNumbers(pageArray);
+  }, [movieData, moviesPerPage]);
+
   return (
     <div className="movie-container">
       <div className="movie">
@@ -277,12 +307,10 @@ function MovieSection() {
               onChange={handleMovieNameChange}
             />
             <input
-              type="number"
+              type="text"
               placeholder="enter movie rating"
               value={movieRating}
               onChange={handleMovieRatingChange}
-              min={1}
-              max={5}
             />
             <input
               type="text"
@@ -335,7 +363,7 @@ function MovieSection() {
                   </tr>
                 </thead>
                 <tbody>
-                  {movieData
+                  {paginationMovieData
                     .filter((item) => {
                       if (
                         (search !== "" &&
@@ -392,11 +420,33 @@ function MovieSection() {
             </div>
             <div className="movie-pagination">
               <div className="movie-pagination-navigators-container">
-                <div className="movie-pagination-navigators active">1</div>
-                <div className="movie-pagination-navigators">2</div>
-                <div className="movie-pagination-navigators">3</div>
-                <div className="movie-pagination-navigators">4</div>
-                <div className="movie-pagination-navigators">5</div>
+                {moviePageNumbers.map((number) => {
+                  return (
+                    <div
+                      key={number}
+                      className={`movie-pagination-navigators ${
+                        number === currentMoviePage && "active"
+                      }`}
+                      onClick={handlePaginationNavigation}
+                    >
+                      {number}
+                    </div>
+                  );
+                })}
+              </div>
+              <div className="movie-pagination-movies-per-page">
+                <select
+                  name="pagination"
+                  id="pagination"
+                  value={moviesPerPage}
+                  onChange={handleMoviesPerPageChange}
+                >
+                  <option value="movies per page">movies per page</option>
+                  <option value="5">5</option>
+                  <option value="10">10</option>
+                  <option value="20">20</option>
+                  <option value="30">30</option>
+                </select>
               </div>
               <button onClick={downloadMoviesPdf}>Download PDF</button>
             </div>
@@ -453,19 +503,12 @@ function MovieSection() {
               value={editMovieName}
               onChange={handleEditMovieNameChange}
             />
-            <select
-              name="movie-rating"
-              id="movie-rating"
+            <input
+              type="text"
+              placeholder="enter movie rating"
               value={editMovieRating}
               onChange={handleEditMovieRatingChange}
-            >
-              <option value="rate this movie">rate this movie</option>
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5">5</option>
-            </select>
+            />
             <input
               type="text"
               placeholder="enter your name"
