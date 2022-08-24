@@ -22,6 +22,8 @@ function MovieSection() {
   const [movieId, setMovieId] = useState("");
   const [search, setSearch] = useState("");
   const [sort, setSort] = useState("");
+  const [averageMovieRating, setAverageMovieRating] = useState("");
+  const [averageMovieRatingResult, setAverageMovieRatingResult] = useState("");
 
   const handleMovieNameChange = (e) => {
     setMovieName(e.target.value);
@@ -48,6 +50,10 @@ function MovieSection() {
 
   const handleEditUserNameChange = (e) => {
     setEditUserName(e.target.value);
+  };
+
+  const handleAverageMovieRatingChange = (e) => {
+    setAverageMovieRating(e.target.value);
   };
 
   const handleSortChange = (e) => {
@@ -238,6 +244,26 @@ function MovieSection() {
     setSearch(e.target.value);
   };
 
+  const handleAverageMovieRating = async () => {
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/api/v1/movies/averageRating",
+        { movieName: averageMovieRating }
+      );
+
+      if (response.status === 200) {
+        setAverageMovieRatingResult(response.data.averageMovieRating);
+        if (response.data.averageMovieRating === null) {
+          setAverageMovieRatingResult("movie not found");
+          return;
+        }
+        return;
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <div className="movie-container">
       <div className="movie">
@@ -336,7 +362,7 @@ function MovieSection() {
                         return a.userName > b.userName ? 1 : -1;
                       }
                       if (sort === "noSort") {
-                        return;
+                        return false;
                       }
                       return false;
                     })
@@ -373,6 +399,20 @@ function MovieSection() {
                 <div className="movie-pagination-navigators">5</div>
               </div>
               <button onClick={downloadMoviesPdf}>Download PDF</button>
+            </div>
+            <div className="movie-average-rating">
+              <div className="movie-average-rating-input">
+                <input
+                  type="text"
+                  placeholder="enter movie name for average rating"
+                  value={averageMovieRating}
+                  onChange={handleAverageMovieRatingChange}
+                />
+                <button onClick={handleAverageMovieRating}>submit</button>
+              </div>
+              {averageMovieRatingResult && (
+                <p>average rating: {averageMovieRatingResult}</p>
+              )}
             </div>
           </div>
         ) : (
