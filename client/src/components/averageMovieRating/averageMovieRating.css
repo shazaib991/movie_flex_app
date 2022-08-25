@@ -1,0 +1,68 @@
+.movie-average-rating {
+  width: 95%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 2rem;
+}
+
+.movie-average-rating-input {
+  display: flex;
+  align-items: center;
+}
+
+.movie-average-rating-input input {
+  outline: none;
+  border: none;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  background-color: #8da7ff;
+  color: white;
+  width: 20rem;
+  margin-right: 2rem;
+}
+
+.movie-average-rating-input input::placeholder {
+  color: white;
+}
+
+.movie-average-rating-input button {
+  width: 8rem;
+  background-color: #8da7ff;
+  border: none;
+  border-radius: 0.5rem;
+  color: white;
+  font-size: 1.7rem;
+  cursor: pointer;
+  padding: 0.7rem 0;
+}
+
+.movie-average-rating p {
+  font-size: 2rem;
+}
+
+@media screen and (max-width: 768px) {
+  .movie-average-rating {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .movie-average-rating-input {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .movie-average-rating-input input {
+    width: 100%;
+    margin: 1rem 0;
+  }
+
+  .movie-average-rating button {
+    width: 100%;
+    margin: 0 0 3rem 0;
+  }
+
+  .movie-average-rating p {
+    text-align: center;
+  }
+}

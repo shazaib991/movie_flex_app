@@ -1,0 +1,80 @@
+.movie-form-container {
+  width: 100%;
+  background-color: #efefef;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 0.8rem;
+  position: relative;
+}
+
+.movie-form {
+  width: 95%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.movie-form > input {
+  width: 100%;
+  margin: 1.1rem 0;
+  outline: none;
+  border: none;
+  padding: 1rem;
+  border-radius: 0.5rem;
+}
+
+.movie-form-btn > button {
+  width: 25rem;
+  background-color: #8da7ff;
+  border: none;
+  border-radius: 0.5rem;
+  margin-bottom: 1.5rem;
+  color: white;
+  font-size: 1.7rem;
+  cursor: pointer;
+  padding: 1rem 0;
+}
+
+.request-message {
+  height: 3rem;
+  width: 40%;
+  position: absolute;
+  bottom: 1.9rem;
+  left: 2.7%;
+  color: white;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.7rem;
+}
+
+.request-message.warning {
+  background-color: #ffc107;
+}
+
+.request-message.success {
+  background-color: #28a745;
+}
+
+.request-message.error {
+  background-color: #dc3545;
+}
+
+@media screen and (max-width: 768px) {
+  .request-message {
+    width: 95%;
+    bottom: 6.5rem;
+  }
+
+  .movie-form {
+    display: block;
+  }
+
+  .movie-form-btn > button {
+    margin: 3rem 0 2rem 0;
+    width: 100%;
+  }
+}
