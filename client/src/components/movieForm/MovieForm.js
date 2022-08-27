@@ -38,11 +38,14 @@ function MovieForm({
       }, 2000);
     }
     try {
-      const response = await axios.post("http://localhost:5000/api/v1/movies", {
-        movieName,
-        movieRating,
-        userName,
-      });
+      const response = await axios.post(
+        "https://movie-flex-table.herokuapp.com/api/v1/movies",
+        {
+          movieName,
+          movieRating,
+          userName,
+        }
+      );
       if (response.data.msg === "movie added successfully") {
         requestMessage.values = {
           msg: "successfully submited",

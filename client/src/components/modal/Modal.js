@@ -64,7 +64,7 @@ function Modal({
 
     try {
       const response = await axios.patch(
-        `http://localhost:5000/api/v1/movies/${movieId}`,
+        `https://movie-flex-table.herokuapp.com/api/v1/movies/${movieId}`,
         {
           movieName: editMovieName,
           movieRating: editMovieRating,
@@ -104,7 +104,7 @@ function Modal({
   const handleMovieDelete = async (movieId) => {
     try {
       const response = await axios.delete(
-        `http://localhost:5000/api/v1/movies/${movieId}`
+        `https://movie-flex-table.herokuapp.com/api/v1/movies/${movieId}`
       );
 
       if (response.status === 200) {

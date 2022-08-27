@@ -18,7 +18,9 @@ function MovieSection() {
 
   const fetchMovieData = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/api/v1/movies");
+      const response = await axios.get(
+        "https://movie-flex-table.herokuapp.com/api/v1/movies"
+      );
       const movies = response.data;
 
       setMovieData(movies);

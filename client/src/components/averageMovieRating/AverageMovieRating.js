@@ -13,7 +13,7 @@ function AverageMovieRating() {
   const handleAverageMovieRating = async () => {
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/v1/movies/averageRating",
+        "https://movie-flex-table.herokuapp.com/api/v1/movies/averageRating",
         { movieName: averageMovieRating }
       );
 
